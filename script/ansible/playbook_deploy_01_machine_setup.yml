@@ -1,0 +1,20 @@
+---
+  
+# Dependencies to Run first
+# install pip
+# install boto
+# install boto3
+# install ansible
+# ansible-galaxy install zzet.rbenv
+
+  
+- hosts: 
+    - tag_AnsibleTag_ASG_PRODUCTION
+  become: yes
+  remote_user: ubuntu
+
+  roles:
+    - { role: machine_setup, tags: machine_setup }
+    - { role: postgres, tags: postgres }    
+    # note tools may need to come before postgres; tbd
+    - { role: tools, tags: tools }    

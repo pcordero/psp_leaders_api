@@ -1,0 +1,59 @@
+---
+- name: find ubuntu main repository name
+  command: lsb_release -cs
+  register: ubuntu_release
+
+- debug: var=ubuntu_release.stdout
+
+- name: check if repository is added
+  apt_repository:
+    repo: "deb http://apt.postgresql.org/pub/repos/apt/ {{ubuntu_release.stdout}}-pgdg main"
+    state: present
+
+- name: import repository keys
+  apt_key:
+    url: https://www.postgresql.org/media/keys/ACCC4CF8.asc
+    state: present
+
+- name: Update and upgrade apt packages
+  become: true
+  apt:
+    upgrade: yes
+    force: yes
+    update_cache: yes
+    cache_valid_time: 86400 
+
+- name: install postgres 9.5; may be able to use role; investigate based on version
+  become: true
+  apt: pkg={{ item }}
+       state=present
+       force=yes
+  with_items:
+    - postgresql-9.5
+    - postgresql-client
+
+- name: modify /etc/postgresql/9.5/main/pg_hba.conf to reflect peer => trust method
+  replace:
+    path: /etc/postgresql/9.5/main/pg_hba.conf
+    regexp: 'peer'
+    replace: 'trust'
+    backup: yes
+
+- name: modify /etc/postgresql/9.5/main/pg_hba.conf to reflect md5 => trust method
+  replace:
+    path: /etc/postgresql/9.5/main/pg_hba.conf
+    regexp: 'md5'
+    replace: 'trust'
+    backup: yes
+
+- name: Restart postgres service to pick up trust security model
+  become: yes
+  service:
+    name: postgresql
+    state: restarted
+
+- name: create a postgres user
+  postgresql_user:
+    name: ubuntu
+    password: 
+    role_attr_flags: CREATEDB,SUPERUSER

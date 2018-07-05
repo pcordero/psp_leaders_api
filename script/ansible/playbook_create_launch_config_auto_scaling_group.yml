@@ -1,0 +1,35 @@
+# ansible-playbook -i inventories/seasdeployer playbook_create_seas_deployer10_run_capistrano.yml
+#- hosts: cap_deployer
+---
+- hosts: 
+    - 
+  become: false
+  vars:
+    base_name: prayerapi
+    environment_tag: production
+    role_tag: web
+    asg_desired_capacity: 1
+    asg_min_capacity: 1
+    asg_max_capacity: 1
+    ansible_tag: AnsibleTag_PRAYERAPI_PRODUCTION
+    instance_type: t2.small
+    vpc: vpc-WHATEVER
+    subnet_id: subnet-WHATEVER
+    volume_size: 8
+    availability_zone: us-west-2a
+    security_group1: production
+    security_group2: default
+    volume_type: gp2
+    launch_config_security_group3: sg-WHATEVER
+    ami_id: ami-WHATEVER
+    key_pair_name: prayerapi
+    root_device_type: ebs
+    root_device: /dev/sda1
+    block_device: /dev/sda1
+    network_interface: eth0
+    availability_zone1: us-west-2a
+    health_check_period: 60
+  remote_user: ubuntu
+  roles: 
+    - { role: aws_create_launch_config, tags: aws}
+    - { role: aws_create_auto_scaling_group, tags: aws}

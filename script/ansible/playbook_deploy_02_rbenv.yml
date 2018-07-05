@@ -1,0 +1,20 @@
+  
+#- hosts: all
+- hosts:
+    - tag_AnsibleTag_PRODUCTION
+  become: yes
+  remote_user: ubuntu
+  gather_facts: true 
+  vars:
+    rbenv_owner: ubuntu
+    rbenv:
+      env: user
+      version: v1.0.0
+      default_ruby: 2.3.1p112
+      rubies:
+      - version: 2.3.1p112
+        env:
+          RUBY_CONFIGURE_OPTS: "--enable-shared"
+  roles: 
+    - { role: zzet.rbenv, rbenv_users: ubuntu, tags: ruby }
+    - { role: install_bundler, tags: ruby}

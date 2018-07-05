@@ -1,0 +1,15 @@
+- name: Create Launch Config
+  local_action:
+    module: ec2_lc
+    name: "{{base_name}}"
+    image_id: "{{ami_id}}"
+    key_name: "{{key_pair_name}}"
+    vpc_id: "{{vpc}}"
+    security_groups: ["{{security_group1}}", "{{security_group2}}"]
+    instance_type: "{{instance_type}}"
+
+    volumes:
+    - device_name: /dev/sda1
+      volume_size: "{{volume_size}}"
+      volume_type: "{{volume_type}}"
+      delete_on_termination: true

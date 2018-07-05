@@ -1,0 +1,74 @@
+---
+# - name: Add add-apt-repository --yes ppa:cernekee repository
+#   command: "add-apt-repository --yes ppa:cernekee"
+#
+# # Add specified repository into sources list.
+# - apt_repository:
+#     repo: deb http://archive.canonical.com/ubuntu hardy partner
+#     state: present
+    
+# Add nginx stable repository from PPA and install its signing key.
+- name: Run "apt-get update" as a separate step
+  apt:
+    update_cache: yes
+    cache_valid_time: 3600
+  
+- name: run an apt-get update
+  command: "apt-get update"
+  
+- name: Install Basic Tools
+  apt: pkg={{ item }}
+       state=present
+  with_items: 
+    - bash-completion
+    - curl
+    - daemontools
+    - exiftool
+    - git
+    - htop
+    - iftop
+    - imagemagick
+    - iotop
+    - jq
+    - libncurses-dev
+    - lynx
+    - lynx-cur
+    - mc
+    - mytop
+    - nano
+    - ncdu
+    - nmap
+    - python
+    - ruby-ncurses
+    - smartmontools
+    - sudo 
+    - tmux
+    - tree
+    - vim
+    - wget
+    - xfsprogs
+    - python-boto
+    - awscli
+    - libxslt-dev    
+    - python-pip
+    - python-dev
+    - software-properties-common
+    - poppler-utils
+
+- name: install postgres dependencies with  force yes (respond yes to prompts on security warnings)
+  apt: pkg={{ item }}
+       state=present
+       force=yes
+  with_items: 
+    - libpq-dev
+    - libpq5
+
+- name: install psycopg2 using pip
+  pip:
+    name: psycopg2
+    
+- name: Install libxml2-dev
+  apt:
+    name: libxml2-dev=2.9.3+dfsg1-1ubuntu0.5
+    state: present
+

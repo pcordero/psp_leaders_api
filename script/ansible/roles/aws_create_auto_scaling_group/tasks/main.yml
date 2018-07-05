@@ -1,0 +1,16 @@
+- name: Create AutoScaling Group
+  local_action:
+    module: ec2_asg
+    name: "{{base_name}}"
+    availability_zones: [ "{{availability_zone1}}" ]
+    launch_config_name: "{{base_name}}"
+    min_size: "{{asg_min_capacity}}"
+    max_size: "{{asg_max_capacity}}"
+    desired_capacity: "{{asg_desired_capacity}}"
+    health_check_period: "{{health_check_period}}"
+    vpc_zone_identifier: [ "{{subnet_id}}" ]
+    tags:
+      - AnsibleTag_ASG_PRODUCTION: ""
+      - environment: "{{environment_tag}}"
+      - Name: "{{base_name}}"
+      - role: "{{role_tag}}"

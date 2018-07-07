@@ -39,6 +39,8 @@ group :development do
   gem 'aws-sdk'
   gem 'capistrano-measure'
   gem 'capistrano-asg'
+  #gem 'capistrano-puma'
+  gem 'capistrano3-puma', github: "seuros/capistrano-puma"
 end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
@@ -49,3 +51,4 @@ gem 'awesome_print'
 
 #R
 gem 'responders'
+

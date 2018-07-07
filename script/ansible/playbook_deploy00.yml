@@ -1,0 +1,8 @@
+# ansible-playbook -i script/ansible/inventories/api script/ansible/playbook_deploy00.yml
+
+# Begin with machine configuration
+- import_playbook: playbook_deploy_01_machine_setup.yml
+# Add rbenv for ruby
+- import_playbook: playbook_deploy_02_rbenv.yml
+# Set up rbenv on both machines for the ubuntu user
+- import_playbook: playbook_deploy_03_bundler.yml

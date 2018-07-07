@@ -80,6 +80,9 @@ test:
 #
 production:
   <<: *default
-  database: new-leaders-api2_production
-  username: new-leaders-api2
-  password: <%= ENV['NEW-LEADERS-API2_DATABASE_PASSWORD'] %>
+  database: new_leaders_api2_production
+  username: root
+  password: dfkjer5fdwaf!
+  pool: 5
+  host: new-leaders.czps0byobfz2.us-east-2.rds.amazonaws.com
+  port: 5432

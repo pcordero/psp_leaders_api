@@ -11,6 +11,35 @@
 - name: Ensure NTP (for time synchronization) is installed
   apt: name=ntp state=present
 
+
+- name: create app directory
+  file: path=/home/ubuntu/new-leaders-api2 state=directory
+
+# - name: register a variable
+#   shell: echo 'YES'
+#   when: (inventory_hostname in hostvars[inventory_hostname]['groups']['tag_AnsibleTag_ASG_PRODUCTION'])
+#   register: host_comes_from_autoscaling_group
+  
+- name: update /etc/rc.local for tcp_tw_reuse (faster tcp recycling) on machines which are servers 
+  lineinfile: dest=/etc/rc.local regexp="^echo 1 > "  line="echo 1 > /proc/sys/net/ipv4/tcp_tw_reuse"
+  
+- name: execute the fix on the currently running machine instance
+  shell: "echo 1 > /proc/sys/net/ipv4/tcp_tw_reuse"
+  
+- name: Check that /home/ubuntu/.bash_profile exists
+  stat: 
+    path: /home/ubuntu/.bash_profile
+  register: stat_result
+  
+- name: copy up .bash_profile
+  copy:
+    src: files/bash_profile
+    dest: /home/ubuntu/.bash_profile
+    owner: ubuntu
+    group: ubuntu
+  when: 
+    - stat_result.stat.exists == False
+    
 - name: Check that the /home/ubuntu/.bash_profile exists
   stat:
     path: /home/ubuntu/.bash_profile
@@ -21,19 +50,11 @@
     line: 'PATH="$HOME/bin:$HOME/.local/bin:$PATH:/usr/sbin/"'
   when: stat_result.stat.exists == True 
   
-- name: create app directory
-  file: path=/home/ubuntu/new-leaders-api2 state=directory
-
-- name: register a variable
-  shell: echo 'YES'
-  when: (inventory_hostname in hostvars[inventory_hostname]['groups']['tag_AnsibleTag_ASG_PRODUCTION'])
-  register: host_comes_from_autoscaling_group
-  
-- name: update /etc/rc.local for tcp_tw_reuse (faster tcp recycling) on machines which are servers 
-  lineinfile: dest=/etc/rc.local regexp="^echo 1 > "  line="echo 1 > /proc/sys/net/ipv4/tcp_tw_reuse"
-  
-- name: execute the fix on the currently running machine instance
-  shell: "echo 1 > /proc/sys/net/ipv4/tcp_tw_reuse"
+- name: Add the RAILS_ENV=production to /home/ubuntu/.bash_profile
+  lineinfile: 
+    path: /home/ubuntu/.bash_profile
+    line: 'export RAILS_ENV=production'
+  when: stat_result.stat.exists == True
   
 
 

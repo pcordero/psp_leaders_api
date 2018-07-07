@@ -29,22 +29,23 @@
        state=present
        force=yes
   with_items:
-    - postgresql-9.5
+    - postgresql
+    #- postgresql-9.5
     - postgresql-client
 
-- name: modify /etc/postgresql/9.5/main/pg_hba.conf to reflect peer => trust method
-  replace:
-    path: /etc/postgresql/9.5/main/pg_hba.conf
-    regexp: 'peer'
-    replace: 'trust'
-    backup: yes
-
-- name: modify /etc/postgresql/9.5/main/pg_hba.conf to reflect md5 => trust method
-  replace:
-    path: /etc/postgresql/9.5/main/pg_hba.conf
-    regexp: 'md5'
-    replace: 'trust'
-    backup: yes
+# - name: modify /etc/postgresql/9.5/main/pg_hba.conf to reflect peer => trust method
+#   replace:
+#     path: /etc/postgresql/9.5/main/pg_hba.conf
+#     regexp: 'peer'
+#     replace: 'trust'
+#     backup: yes
+#
+# - name: modify /etc/postgresql/9.5/main/pg_hba.conf to reflect md5 => trust method
+#   replace:
+#     path: /etc/postgresql/9.5/main/pg_hba.conf
+#     regexp: 'md5'
+#     replace: 'trust'
+#     backup: yes
 
 - name: Restart postgres service to pick up trust security model
   become: yes

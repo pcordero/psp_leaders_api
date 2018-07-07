@@ -1,7 +1,7 @@
   
-#- hosts: all
-- hosts:
-    - tag_AnsibleTag_PRODUCTION
+- hosts: all
+#- hosts:
+#    - tag_AnsibleTag_PRODUCTION
   become: yes
   remote_user: ubuntu
   gather_facts: true 
@@ -10,9 +10,9 @@
     rbenv:
       env: user
       version: v1.0.0
-      default_ruby: 2.3.1p112
+      default_ruby: 2.4.4
       rubies:
-      - version: 2.3.1p112
+      - version: 2.4.4
         env:
           RUBY_CONFIGURE_OPTS: "--enable-shared"
   roles: 

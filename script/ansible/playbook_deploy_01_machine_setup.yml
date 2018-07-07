@@ -9,12 +9,13 @@
 
   
 - hosts: 
-    - tag_AnsibleTag_ASG_PRODUCTION
+    #- tag_AnsibleTag_ASG_PRODUCTION
+    - all
   become: yes
   remote_user: ubuntu
 
   roles:
     - { role: machine_setup, tags: machine_setup }
-    - { role: postgres, tags: postgres }    
+    #- { role: postgres, tags: postgres }    
     # note tools may need to come before postgres; tbd
     - { role: tools, tags: tools }    

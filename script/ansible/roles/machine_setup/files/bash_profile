@@ -1,0 +1,5 @@
+source ~/.bashrc
+
+cd /home/ubuntu/new-leaders-api2/current
+
+path="$HOME/bin:$HOME/.local/bin:$PATH:/usr/sbin"

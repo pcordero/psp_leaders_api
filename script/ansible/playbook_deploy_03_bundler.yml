@@ -1,6 +1,6 @@
 #- hosts: all
-- hosts:
-    - tag_AnsibleTag_ASG_PRODUCTION
+- hosts: all
+    #- tag_AnsibleTag_ASG_PRODUCTION
   become: yes
   remote_user: ubuntu
   roles: 

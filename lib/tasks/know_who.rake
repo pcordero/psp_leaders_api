@@ -1,6 +1,7 @@
 require 'csv'
 require 'know_who'
 
+# bundle exec rake know_who:download_latest_data --trace
 namespace :know_who do
   task :download_latest_data do
     `mkdir -p know_who/raw`

@@ -20,12 +20,15 @@ namespace :know_who do
     
   end
 
+  # bundle exec rake know_who:import_states --trace
   task :import_states => :environment do
     KnowWho::StateImporter.new.import('spec/fixtures/states.csv')
   end
 
+  # bundle exec rake know_who:import_month --trace
   task :import_month => :environment do
     month_dir = ENV['KNOW_WHO_MONTH']
+    month_dir = File.join('.', 'know_who/raw/government_1/')
     file_list = Dir["#{month_dir}/*.*"]
     KnowWho::LeaderImporter.new.import_files(file_list)
   end

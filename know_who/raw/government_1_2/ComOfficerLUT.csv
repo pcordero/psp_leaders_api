@@ -1,0 +1,30 @@
+"OFFICERCODE","DESCRIPTION","LUTORDER"
+"CHM","Chairman",1
+"ACHM","Acting Chairman",2
+"RMM","Ranking Minority Member",3
+"MCH","Minority Chairman",4
+"CCH","Co-Chair",5
+"VCH","Vice Chair",6
+"ARM","Assistant Ranking Minority Member",7
+"DRM","Deputy Ranking Minority Member",8
+"VRM","Vice Ranking Minority Member",9
+"CVC","Co-Vice Chair",10
+"AVC","Assistant Vice Chair",11
+"MVC","Minority Vice Chair",12
+"ALT","Alternate",13
+"ACH","Alternate Chair",14
+"LMB","Liaison Member",15
+"ADV","Advisory Member",16
+"EXO","Ex-Officio",17
+"CHE","Chair Emeritus",18
+"DEL","Delegate",19
+"SEC","Secretary",20
+"TRE","Treasurer",21
+"STR","Secretary / Treasurer",22
+"CK","Clerk",23
+"FLR","Floor Leader",24
+"RMB","Ranking Member",25
+"DCH","Deputy Chair",26
+"ADH","Ad Hoc",27
+"MSP","Minority Spokesperson",28
+"SCH","Sub Chairperson",29

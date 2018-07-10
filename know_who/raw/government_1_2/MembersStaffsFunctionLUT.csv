@@ -1,0 +1,31 @@
+"FUNCTIONCODE","FUNCTIONDESCRIPTION","LUTORDER"
+"AA","Chief of Staff / Administrative Assistant",1
+"LD","Legislative Director",2
+"DD","District Director / District Chief of Staff",3
+"LAP","Legislative Assistant / Policy Advisor",4
+"RDR","Regional Director",5
+"PSO","Press Secretary / Communications Director / Other Liaison",6
+"NMD","New Media Director / Online Communications",7
+"OUT","Outreach",8
+"AV","Senior Advisor / Advisor",9
+"EAP","Executive Assistant / Personal Assistant",10
+"FA","Financial Administrator",11
+"FL","Fellow / Detailee",12
+"GC","Counsel / Legislative Counsel",13
+"OM","Office Manager / Office Administrator",14
+"RA","Research Assistant / Legislative Aide",15
+"SC","Scheduler",16
+"SO","Systems Administrator",17
+"SP","Special Assistant / Special Projects",18
+"SSS","Senior Secretary / Secretary",19
+"SW","Speechwriter / Editor / Publications and Documents",20
+"PRA","Press Assistant",21
+"LC","Legislative Correspondent",22
+"SA","Staff Assistant",23
+"MM","Mailroom Manager / Mail Operations / Mail Services",24
+"FDR","Field Rep",25
+"CW","Caseworker / Constituent Liaison",26
+"TC","Tour Coordinator",27
+"RE","Receptionist",28
+"IN","Intern Coordinator",29
+"INT","Intern",30

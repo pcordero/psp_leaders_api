@@ -1,0 +1,24 @@
+"CODE","OCCUPATION_LONG","LUTORDER"
+"ACT","Actor/Entertainer",1
+"AER","Aeronautics",2
+"AGR","Agriculture",3
+"BAN","Banker",4
+"BRO","Broadcaster",5
+"BUS","Business",6
+"CLE","Clergy",7
+"EDU","Education",8
+"ENG","Engineering",9
+"HOM","Homemaker",10
+"JOU","Journalism",11
+"LAB","Labor",12
+"LEN","Law Enforcement",13
+"LOB","Lobbyist",14
+"LAW","Legal",15
+"MED","Medicine",16
+"MIL","Military",17
+"PRO","Professional Sports",18
+"PUB","Public Official",19
+"REL","Real Estate",20
+"ENT","Entertainment",21
+"VOL","Volunteer/Advocate",25
+"OTH","Other",26

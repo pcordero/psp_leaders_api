@@ -59,11 +59,22 @@ class Leader < ActiveRecord::Base
     Leader.update_attributes_from_know_who(leader, data)
     ensure_correct_state(leader, data)
     #debugger
-    leader.tap { |l| l.save! }
+    # Added by jsj on 7/10/18 due to data coming in without a statecode and that
+    # blowing up everything
+    #debugger if data[:statecode].blank? 
+    #return if data[:statecode].blank?    
+    leader.tap { |l| return if l.person_id.nil?; l.save! }
   end
 
   def self.ensure_correct_state(leader, data)
-    state = State.find_by_code!(data[:statecode])
+    puts "statecode = #{data[:statecode]}"
+    puts "state = #{data[:state]}"
+    state = State.find_by_code(data[:statecode])
+    # Added by jsj on 7/10/18 due to data coming in without a statecode and that
+    # blowing up everything
+    if state.nil?
+      state = State.find_by_code(data[:state])
+    end
     if leader.state
       unless leader.state.code == state.code
         raise "Know Who data tried to change leader state"

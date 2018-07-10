@@ -16,6 +16,7 @@ module KnowWho
           ) do |member|
             puts "Processing file: #{file}"
             leader = import_leader(member)
+            next if leader.nil?
             puts "Imported #{leader.prefix_name}"
           end
           `rm #{importing_file}`
@@ -30,7 +31,7 @@ module KnowWho
 
     def import_leader(data)
       Leader.create_or_update(data).tap do |leader|
-        leader.update_attribute(:member_status, 'current')
+        leader.update_attribute(:member_status, 'current') if leader
       end
     end
 

@@ -10,6 +10,7 @@ server "18.217.8.198", user: "ubuntu", roles: %w{app web}
 
 
 
+
 # role-based syntax
 # ==================
 

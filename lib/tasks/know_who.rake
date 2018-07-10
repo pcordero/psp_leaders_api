@@ -5,7 +5,19 @@ require 'know_who'
 namespace :know_who do
   task :download_latest_data do
     `mkdir -p know_who/raw`
-    `cd know_who/raw && wget #{ENV['KNOW_WHO_FTP_URL']}/*`
+    #`cd know_who/raw && wget #{ENV['KNOW_WHO_FTP_URL']}/*`
+    know_who_ftp_url = "ftp://ftp_capitolcomm:ktr84sbe@205.134.170.180/"
+    `cd know_who/raw && wget #{know_who_ftp_url}/*`
+    
+    
+    # URL Address:  ftp://205.134.170.180/
+    #
+    # User name:  ftp_capitolcomm
+    #
+    # Password:  ktr84sbe
+    
+    
+    
   end
 
   task :import_states => :environment do

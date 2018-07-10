@@ -24,6 +24,14 @@ namespace :know_who do
   task :import_states => :environment do
     KnowWho::StateImporter.new.import('spec/fixtures/states.csv')
   end
+  
+  # bundle exec rake know_who:set_current --trace
+  task :set_current => :environment do
+    leaders = Leader.where(["DATE(created_at) = ?", Date.today]).where(:member_status => "pending")
+    leaders.each do |leader|
+      leader.update_attribute(:member_status, 'current')
+    end
+  end
 
   # bundle exec rake know_who:import_month --trace
   task :import_month => :environment do

@@ -32,19 +32,24 @@ Rails.application.routes.draw do
   
   #wget http://localhost:8080/v1/states/fl/us_senate
   get '/v1/states/:state_id/us_senate', to: 'leaders#us_senate'
+  get '/v1/states/:state_id/leaders/us_senate', to: 'leaders#us_senate'
   
   #wget http://localhost:8080/v1/states/fl/us_house
   get '/v1/states/:state_id/us_house', to: 'leaders#us_house'
+  get '/v1/states/:state_id/leaders/us_house', to: 'leaders#us_house'
 
   #wget http://localhost:8080/v1/states/fl/state_senate
   get '/v1/states/:state_id/state_senate', to: 'leaders#state_senate'
+  get '/v1/states/:state_id/leaders/state_senate', to: 'leaders#state_senate'
   
   #/v1/states/ak/leaders/us_senate
   get '/v1/states/:state_id/us_senate', to: 'leaders#us_senate'
   get '/v1/states/:state_id/leaders/us_senate', to: 'leaders#us_senate'
   
   #wget http://localhost:8080/v1/states/fl/state_house
+  # http://localhost:9292/v1/states/ak/leaders/state_house
   get '/v1/states/:state_id/state_house', to: 'leaders#state_house'
+  get '/v1/states/:state_id/leaders/state_house', to: 'leaders#state_house'
 
   #wget http://localhost:8080/v1/states/va/leaders
   get '/v1/states/:state_id/leaders', to: 'leaders#leaders'

@@ -8,5 +8,5 @@ class LeaderSerializer < ActiveModel::Serializer
   :school_3_name, :school_3_date, :school_3_degree, :military_1_branch, :military_1_rank,
   :military_1_dates, :military_2_branch, :military_2_rank, :military_2_dates, :mail_name,
   :mail_title, :mail_address_1, :mail_address_2, :mail_address_3, :mail_address_4, 
-  :mail_address_5, :born_on, :know_who_data, :biography, :member_status
+  :mail_address_5, :born_on, :know_who_data, :biography, :member_status, :state_code
 end

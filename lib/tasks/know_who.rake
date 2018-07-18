@@ -38,6 +38,8 @@ namespace :know_who do
     month_dir = ENV['KNOW_WHO_MONTH']
     month_dir = File.join('.', 'know_who/raw/government_1/')
     file_list = Dir["#{month_dir}/*.*"]
+    file_list = Dir["#{month_dir}/Members.csv"]
+    debugger
     KnowWho::LeaderImporter.new.import_files(file_list)
   end
 

@@ -56,13 +56,17 @@ class Leader < ActiveRecord::Base
     #leader = Leader.find_or_create_by_person_id(data[:pid])
     #debugger
     leader = Leader.find_or_create_by(person_id: data[:pid])
-    Leader.update_attributes_from_know_who(leader, data)
+    debugger if leader.id == 421 && Rails.env.development?
+    leader = Leader.update_attributes_from_know_who(leader, data)
     ensure_correct_state(leader, data)
     #debugger
     # Added by jsj on 7/10/18 due to data coming in without a statecode and that
     # blowing up everything
     #debugger if data[:statecode].blank? 
     #return if data[:statecode].blank?    
+    debugger if leader.id == 421 && Rails.env.development?
+    return if leader.person_id.nil?
+    leader.save
     leader.tap { |l| return if l.person_id.nil?; l.save! }
   end
 
@@ -130,7 +134,6 @@ class Leader < ActiveRecord::Base
   private
 
   def self.update_attributes_from_know_who(leader, data)
-    debugger if leader.id == 421
     leader.born_on = birthday(data)
     leader.person_id = data[:pid]
     leader.legislator_type = data[:legtype]
@@ -185,6 +188,10 @@ class Leader < ActiveRecord::Base
     leader.mail_address_3 = data[:mailaddr3]
     leader.mail_address_4 = data[:mailaddr4]
     leader.mail_address_5 = data[:mailaddr5]
+    puts "In update attributes"
+    debugger if leader.id == 421 && Rails.env.development?
+    
+    return leader
   end
 
   def self.birthday(data)

@@ -130,6 +130,7 @@ class Leader < ActiveRecord::Base
   private
 
   def self.update_attributes_from_know_who(leader, data)
+    debugger if leader.id == 421
     leader.born_on = birthday(data)
     leader.person_id = data[:pid]
     leader.legislator_type = data[:legtype]

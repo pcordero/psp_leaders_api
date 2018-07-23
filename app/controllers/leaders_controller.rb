@@ -54,11 +54,13 @@ class LeadersController < ApplicationController
   
   def leaders
     if Rails.env.development?
+      #@leaders = @state.leaders.current
       @leaders = @state.leaders.limit(ROWS_TO_SERVE).offset(@source_offset.offset)
     else
       
       #@leaders = @state.leaders.current.limit(ROWS_TO_SERVE).offset(@source_offset.offset)
       @leaders = @state.leaders.current#.limit(ROWS_TO_SERVE).offset(@source_offset.offset)
+      #raise "foo"
     end
     render json: @leaders
   end

@@ -1,0 +1,28 @@
+"CODE","DESCRIPTION","STATELOCATION","LUTORDER"
+"D","Democratic Party","All",1
+"R","Republican Party","All",2
+"I","Independent","All",3
+"AIP","American Independent Party","All",4
+"AMP","American Party","All",5
+"CIT","Citizens Party","All",6
+"CRV","Conservative Party","All",7
+"CST","Constitutional","All",8
+"DFL","Democrat Farm Labor Party","MN",9
+"D-NPL","Democrat Nonpartisan League","ND",10
+"G","Green Party","All",11
+"IAP","Independent American Party","All",12
+"ICM","Independent Citizens Movement","VI",13
+"LAB","Labor","All",14
+"LIB","Libertarian","All",15
+"NPL","Natural Law Party","All",16
+"PNP","New Progressive Party","PR",17
+"NP","Non-Partisan","All",18
+"OTHER","Other","All",19
+"PPD","Popular Democratic Party","PR",20
+"P","Progressive Party","VT",21
+"PIP","Puerto Rican Independence Party","PR",22
+"REF","Reform Party","All",23
+"RTL","Right to Life Party","All",24
+"SWP","Socialist Workers Party","All",25
+"TAX","Taxpayers Party","All",26
+"WFP","Working Families Party","All",27

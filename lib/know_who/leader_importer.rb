@@ -30,6 +30,7 @@ module KnowWho
     end
 
     def import_leader(data)
+      #debugger
       Leader.create_or_update(data).tap do |leader|
         leader.update_attribute(:member_status, 'current') if leader
       end

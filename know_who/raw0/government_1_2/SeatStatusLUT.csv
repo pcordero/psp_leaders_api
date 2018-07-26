@@ -1,0 +1,13 @@
+"CODEID","CODE","DEFINITION","LUTORDER"
+1,"AOK","Normal",1
+7,"AOK","Retiring at end of term",2
+10,"AOK","Running for other office",3
+3,"AOK","Term limit reached",4
+4,"VAC","Deceased",5
+9,"VAC","Removed from office",6
+8,"VAC","Resigned from office",7
+2,"VAC","Retired from office",8
+6,"VAC","Took other office",9
+5,"VAC","Unresolved",10
+11,"VAC","Waiting for appointment",11
+12,"VAC","Waiting for special elect",12

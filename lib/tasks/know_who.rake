@@ -1,8 +1,16 @@
 require 'csv'
 require 'know_who'
 
-# bundle exec rake know_who:download_latest_data --trace
 namespace :know_who do
+  task :full_import => :environment do
+    Rake::Task["know_who:download_latest_data"].execute
+    Rake::Task["know_who:unzip"].execute
+    Rake::Task["know_who:set_current"].execute
+    Rake::Task["know_who:import_month"].execute
+  end
+  
+  
+  # bundle exec rake know_who:download_latest_data --trace
   task :download_latest_data do
     `mkdir -p know_who/raw`
     #`cd know_who/raw && wget #{ENV['KNOW_WHO_FTP_URL']}/*`
@@ -29,6 +37,7 @@ namespace :know_who do
   task :set_current => :environment do
     leaders = Leader.where(["DATE(created_at) = ?", Date.today]).where(:member_status => "pending")
     leaders.each do |leader|
+      next if leader.last_name == "Vacant"
       leader.update_attribute(:member_status, 'current')
     end
   end
@@ -43,7 +52,74 @@ namespace :know_who do
     KnowWho::LeaderImporter.new.import_files(file_list)
   end
 
+  # before delete
+  # Leader.count
+  #    (359.9ms)  SELECT COUNT(*) FROM "leaders"
+  # 9425
+  
+  # bundle exec rake know_who:import_months --trace
+  task :import_months => :environment do
+    # federal
+    month_dir = ENV['KNOW_WHO_MONTH']
+    month_dir1 = File.join('.', 'know_who/raw/government_1/')
+    file_list = Dir["#{month_dir1}/*.*"]
+    KnowWho::LeaderImporter.new.import_files(file_list)
+    #file_list = Dir["#{month_dir}/Members.csv"]
+    #debugger
+    # state
+    month_dir2 = File.join('.', 'know_who/raw/government_1_2/')
+    file_list = Dir["#{month_dir2}/*.*"]
+    KnowWho::LeaderImporter.new.import_files(file_list)
+  end
+  
+  # bundle exec rake know_who:import_months_raw0 --trace
+  task :import_months_raw0 => :environment do
+    month_dir = ENV['KNOW_WHO_MONTH']
+    month_dir1 = File.join('.', 'know_who/raw0/government_1/')
+    file_list = Dir["#{month_dir1}/*.*"]
+    KnowWho::LeaderImporter.new.import_files(file_list)
+    #file_list = Dir["#{month_dir}/Members.csv"]
+    #debugger
+    month_dir2 = File.join('.', 'know_who/raw0/government_1_2/')
+    file_list = Dir["#{month_dir2}/*.*"]
+    KnowWho::LeaderImporter.new.import_files(file_list)
+  end
+
   task :show_import_months => :environment do
     puts Dir['spec/fixtures/leaders/*'].sort
+  end
+  
+  # bundle exec rake know_who:activate_by_csv --trace
+  task :activate_by_csv => :environment do
+    puts "At start, current_leaders = #{Leader.where(:member_status => "current").count}"
+    csv_files = []
+    csv_files << File.join('.', 'know_who/raw0/government_1/Members.csv')
+    csv_files << File.join('.', 'know_who/raw0/government_1_2/Members.csv')
+    csv_files.each do |csv_file|
+      CSV.foreach(
+        csv_file,
+        headers: true,
+        header_converters: :symbol
+      ) do |member|
+        
+        leader = Leader.where(person_id: member[:pid]).first
+        if leader
+          leader.update_attribute(:member_status, "current_actual")
+        end
+      end
+    end
+    
+    leaders = Leader.where(:member_status => "current")
+    leaders.each do |leader|
+      leader.update_attribute(:member_status, "current_old")
+    end
+    
+    leaders = Leader.where(:member_status => "current_actual")
+    leaders.each do |leader|
+      leader.update_attribute(:member_status, "current")
+    end
+    
+    puts "At end, current_leaders = #{Leader.where(:member_status => "current").count}"
+    
   end
 end

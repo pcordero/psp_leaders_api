@@ -41,6 +41,41 @@ module KnowWho
       Leader.update_all(member_status: 'former')
       Leader.update_all(member_status: 'pending')
     end
+    
+    def active_by_csv
+      puts "At start, current_leaders = #{Leader.where(:member_status => "current").count}"
+      csv_files = []
+      csv_files << File.join('.', 'know_who/raw0/government_1/Members.csv')
+      csv_files << File.join('.', 'know_who/raw0/government_1_2/Members.csv')
+      csv_files.each do |csv_file|
+        prepare_file(file)
+        
+        CSV.foreach(
+          importing_file,
+          headers: true,
+          header_converters: :symbol
+        ) do |member|
+        
+          leader = Leader.where(person_id: member[:pid]).first
+          if leader
+            leader.update_attribute(:member_status, "current_actual")
+          end
+        end
+      end
+    
+      leaders = Leader.where(:member_status => "current")
+      leaders.each do |leader|
+        leader.update_attribute(:member_status, "current_old")
+      end
+    
+      leaders = Leader.where(:member_status => "current_actual")
+      leaders.each do |leader|
+        leader.update_attribute(:member_status, "current")
+      end
+    
+      puts "At end, current_leaders = #{Leader.where(:member_status => "current").count}"
+    
+    end
 
     private
     

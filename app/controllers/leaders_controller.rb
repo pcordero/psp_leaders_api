@@ -71,7 +71,7 @@ class LeadersController < ApplicationController
       #debugger
       @leaders = @state.leaders.us_senate.limit(ROWS_TO_SERVE).offset(@source_offset.offset)
     else
-      @leaders = @state.leaders.us_senate.current.limit(ROWS_TO_SERVE).offset(@source_offset.offset)
+      @leaders = @state.leaders.us_senate.current.limit(ROWS_TO_SERVE)#.offset(@source_offset.offset)
     end
     render json: @leaders
   end

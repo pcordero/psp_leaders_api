@@ -93,4 +93,10 @@ namespace :know_who do
   task :activate_by_csv => :environment do
     KnowWho::LeaderImporter.active_by_csv
   end
+
+  # bundle exec rake know_who:photo_file_from_csv --trace
+  task :photo_file_from_csv => :environment do
+    KnowWho::LeaderImporter.photo_file_from_csv
+  end
+
 end

@@ -78,6 +78,39 @@ module KnowWho
     
     end
     
+    def self.photo_file_from_csv
+      start = "At start, current_leaders = #{Leader.where(:photo_file => "").count}"
+      puts start
+      csv_files = []
+      csv_files << File.join('.', 'know_who/raw0/government_1/Members.csv')
+      csv_files << File.join('.', 'know_who/raw0/government_1_2/Members.csv')
+      csv_files.each do |csv_file|
+        LeaderImporter.prepare_file(csv_file)
+        
+        CSV.foreach(
+          LeaderImporter.importing_file,
+          headers: true,
+          header_converters: :symbol
+        ) do |member|
+        
+          leader = Leader.where(person_id: member[:pid]).first
+          if leader && leader.photo_file.blank?
+            puts "Found leader: #{leader.id} - #{leader.last_name}"
+            #leader.update_attribute(:member_status, "current_actual")
+            Leader.update_attributes_from_know_who(leader, member)
+            leader.update_attribute(:member_status, "current")
+            debugger if Rails.env.development?
+          end
+        end
+      end
+    
+
+      puts start
+      puts "At end, current_leaders = #{Leader.where(:photo_file => "").count}"
+    
+    end
+    
+    
     def self.prepare_file(file)
       puts "converting to UTF8"
       # jsj - added 5/9 to allow for OSX differences on iconv

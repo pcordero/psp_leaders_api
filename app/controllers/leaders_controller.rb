@@ -72,7 +72,7 @@ class LeadersController < ApplicationController
       @leaders = @state.leaders.us_senate.limit(ROWS_TO_SERVE).offset(@source_offset.offset)
     else
       if @source_offse
-      @leaders = @state.leaders.us_senate#.current.limit(ROWS_TO_SERVE)#.offset(@source_offset.offset)
+      @leaders = @state.leaders.us_senate.current#.limit(ROWS_TO_SERVE)#.offset(@source_offset.offset)
     end
     render json: @leaders
   end

@@ -71,7 +71,8 @@ class LeadersController < ApplicationController
       #debugger
       @leaders = @state.leaders.us_senate.limit(ROWS_TO_SERVE).offset(@source_offset.offset)
     else
-      @leaders = @state.leaders.us_senate.current.limit(ROWS_TO_SERVE)#.offset(@source_offset.offset)
+      if @source_offse
+      @leaders = @state.leaders.us_senate#.current.limit(ROWS_TO_SERVE)#.offset(@source_offset.offset)
     end
     render json: @leaders
   end
@@ -81,7 +82,7 @@ class LeadersController < ApplicationController
     if Rails.env.development?
       @leaders =  @state.leaders.us_house.limit(ROWS_TO_SERVE).offset(@source_offset.offset)
     else
-      @leaders =  @state.leaders.us_house.current.limit(ROWS_TO_SERVE).offset(@source_offset.offset)
+      @leaders =  @state.leaders.us_house.current#.limit(ROWS_TO_SERVE).offset(@source_offset.offset)
     end
     render json: @leaders
   end
@@ -91,7 +92,7 @@ class LeadersController < ApplicationController
     if Rails.env.development?
       @leaders =  @state.leaders.state_senate.limit(ROWS_TO_SERVE).offset(@source_offset.offset)
     else
-      @leaders =  @state.leaders.state_senate.current.limit(ROWS_TO_SERVE).offset(@source_offset.offset)
+      @leaders =  @state.leaders.state_senate.current#.limit(ROWS_TO_SERVE).offset(@source_offset.offset)
     end
     render json: @leaders
   end
@@ -101,7 +102,7 @@ class LeadersController < ApplicationController
     if Rails.env.development?
       @leaders =  @state.leaders.state_house.limit(ROWS_TO_SERVE).offset(@source_offset.offset)
     else
-      @leaders =  @state.leaders.state_house.current.limit(ROWS_TO_SERVE).offset(@source_offset.offset)
+      @leaders =  @state.leaders.state_house.current#.limit(ROWS_TO_SERVE).offset(@source_offset.offset)
     end
     #raise @leaders.map(&:name).inspect
     render json: @leaders

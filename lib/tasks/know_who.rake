@@ -59,6 +59,7 @@ namespace :know_who do
   
   # bundle exec rake know_who:import_months --trace
   task :import_months => :environment do
+    ActiveRecord::Base.connection.execute("Truncate Leaders") if Rails.env.development?
     # federal
     month_dir = ENV['KNOW_WHO_MONTH']
     month_dir1 = File.join('.', 'know_who/raw/government_1/')
@@ -70,10 +71,25 @@ namespace :know_who do
     month_dir2 = File.join('.', 'know_who/raw/government_1_2/')
     file_list = Dir["#{month_dir2}/*.*"]
     KnowWho::LeaderImporter.new.import_files(file_list)
+    
+    leaders = Leader.where(["DATE(created_at) = ?", Date.today]).where(:member_status => "pending")
+    leaders.each do |leader|
+      next if leader.last_name == "Vacant"
+      leader.update_attribute(:member_status, 'current')
+    end
+    
+    puts "After executing: :import_months, total leaders = #{Leader.count}"
+    puts "After executing: :import_months, total current leaders = #{Leader.where(:member_status => 'current').count}"
+    puts "After executing: :import_months, total leaders w/ valid photo_file = #{Leader.where('photo_file IS NOT null').count}"
+    puts "After executing: import_months, Spartz count = #{Leader.where(:last_name => 'Spartz').count}"
+    puts "After executing: import_months, Abbot count = #{Leader.where(:last_name => 'Abbott', :first_name => 'David').count}"
+    puts "After executing: import_months, Buchanan count = #{Leader.where(:last_name => 'Buchanan', :first_name => 'Brian').count}"
   end
   
   # bundle exec rake know_who:import_months_raw0 --trace
   task :import_months_raw0 => :environment do
+    ActiveRecord::Base.connection.execute("Truncate Leaders") if Rails.env.development?
+
     month_dir = ENV['KNOW_WHO_MONTH']
     month_dir1 = File.join('.', 'know_who/raw0/government_1/')
     file_list = Dir["#{month_dir1}/*.*"]
@@ -83,6 +99,12 @@ namespace :know_who do
     month_dir2 = File.join('.', 'know_who/raw0/government_1_2/')
     file_list = Dir["#{month_dir2}/*.*"]
     KnowWho::LeaderImporter.new.import_files(file_list)
+
+    puts "After executing: :import_months_raw0, total leaders = #{Leader.count}"
+    puts "After executing: :import_months_raw0, total leaders w/ valid photo_file = #{Leader.where('photo_file IS NOT null').count}"
+    puts "After executing: import_months_raw0, Spartz count = #{Leader.where(:last_name => 'Spartz').count}"
+    puts "After executing: import_months_raw0, Abbot count = #{Leader.where(:last_name => 'Abbot', :first_name => 'Dave').count}"
+    puts "After executing: import_months_raw0, Buchanan count = #{Leader.where(:last_name => 'Buchanan', :first_name => 'Brian').count}"
   end
 
   task :show_import_months => :environment do

@@ -120,5 +120,75 @@ namespace :know_who do
   task :photo_file_from_csv => :environment do
     KnowWho::LeaderImporter.photo_file_from_csv
   end
-
+  
+  # bundle exec rake know_who:copy_images_to_psp --trace
+  task :copy_images_to_psp => :environment do
+    paths = []
+    state_str = "AK/ AR/ AZ/ CO/ DC/ FL/ GU/ IA/ IL/ KS/ LA/ MD/ MI/ MO/ MT/ ND/ NH/ NM/ NY/ OK/ PA/ RI/ SD/ TX/ VA/ VT/ WI/ WY/
+AL/ AS/ CA/ CT/ DE/ GA/ HI/ ID/ IN/ KY/ MA/ ME/ MN/ MS/ NC/ NE/ NJ/ NV/ OH/ OR/ PR/ SC/ TN/ UT/ VI/ WA/ WV/".gsub(/\//,'')
+    states = state_str.split(" ")
+    states.each do |state|
+      paths << [
+        File.join(Rails.root, "know_who/raw/Photos/FL/H/"),
+        "/Users/sjohnson/fuzzygroup/consulting/new_leaders_original/psp/public/photos/FL/H/"]
+      paths << [
+        File.join(Rails.root, "know_who/raw/Photos/FL/S/"), 
+        "/Users/sjohnson/fuzzygroup/consulting/new_leaders_original/psp/public/photos/FL/S/"]
+      paths << [
+        File.join(Rails.root, "know_who/raw/'Photos 2'/SL/#{state}/H/"), 
+        "/Users/sjohnson/fuzzygroup/consulting/new_leaders_original/psp/public/photos/SL/#{state}/H/"]
+      paths << [
+        File.join(Rails.root, "know_who/raw/'Photos 2'/SL/#{state}/S/"), 
+        "/Users/sjohnson/fuzzygroup/consulting/new_leaders_original/psp/public/photos/SL/#{state}/S/"]
+      # paths << [
+      #   File.join(Rails.root, "know_who/raw0/Photos/FL/H/"),
+      #   "/Users/sjohnson/fuzzygroup/consulting/new_leaders_original/psp/public/photos/FL/H/"
+      # ]
+      # paths << [
+      #   File.join(Rails.root, "know_who/raw0/Photos/FL/S/"),
+      #   "/Users/sjohnson/fuzzygroup/consulting/new_leaders_original/psp/public/photos/FL/S/"
+      # ]
+      paths << [
+        File.join(Rails.root, "know_who/raw0/Photos/SL/#{state}/H/"), 
+        "/Users/sjohnson/fuzzygroup/consulting/new_leaders_original/psp/public/photos/SL/#{state}/H/"
+      ]
+      paths << [
+        File.join(Rails.root, "know_who/raw0/Photos/SL/#{state}/S/"), 
+        "/Users/sjohnson/fuzzygroup/consulting/new_leaders_original/psp/public/photos/SL/#{state}/S/"
+      ]
+      paths << [
+        File.join(Rails.root, "know_who/raw0/Photos_2/FL/S/"), 
+        "/Users/sjohnson/fuzzygroup/consulting/new_leaders_original/psp/public/photos/SL/#{state}/S/"
+      ]
+      paths << [
+        File.join(Rails.root, "know_who/raw0/Photos_2/FL/H/"), 
+        "/Users/sjohnson/fuzzygroup/consulting/new_leaders_original/psp/public/photos/SL/#{state}/S/"
+      ]
+      # paths << [
+      #   File.join(Rails.root, "know_who/raw0/Photos_2/SL/#{state}/H/"),
+      #   "/Users/sjohnson/fuzzygroup/consulting/new_leaders_original/psp/public/photos/SL/#{state}/H/"
+      # ]
+      # paths << [
+      #   File.join(Rails.root, "know_who/raw0/Photos_2/SL/#{state}/S/"),
+      #   "/Users/sjohnson/fuzzygroup/consulting/new_leaders_original/psp/public/photos/SL/#{state}/S/"
+      # ]
+    end
+    
+    #cp /Users/sjohnson/fuzzygroup/consulting/new-leaders-api2/know_who/raw/'Photos 2'/SL/WI/H/* /Users/sjohnson/fuzzygroup/consulting/new_leaders_original/psp/public/photos/SL/WI/H/
+    
+    paths.each do |path_tuple|
+      source = path_tuple[0]
+      dest = path_tuple[1]
+      `cp -p -r #{source}* #{dest}`
+    end
+  end
+  
+  # bundle exec rake know_who:update_slugs --trace
+  task :update_slugs => :environment do
+    leaders = Leader.all
+    leaders.each do |l|
+      l.update_slug
+    end
+  end
+  
 end

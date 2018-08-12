@@ -186,8 +186,12 @@ AL/ AS/ CA/ CT/ DE/ GA/ HI/ ID/ IN/ KY/ MA/ ME/ MN/ MS/ NC/ NE/ NJ/ NV/ OH/ OR/ 
   # bundle exec rake know_who:update_slugs --trace
   task :update_slugs => :environment do
     leaders = Leader.all
+    # leaders.each do |leader|
+    #   leader.update_attribute(:slug, nil)
+    # end
+    
     leaders.each do |l|
-      l.update_slug
+      l.generate_slug
     end
   end
   

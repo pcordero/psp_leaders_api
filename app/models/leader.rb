@@ -129,12 +129,13 @@ class Leader < ActiveRecord::Base
     else
       self.slug = "#{tmp_slug}--#{count + 1}"
     end
+    self.save
   end
   
-  def update_slug
-    s = self.generate_slug
-    self.update_attribute(:slug, s)
-  end
+  # def update_slug
+  #   s = self.generate_slug
+  #   self.update_attribute(:slug, s)
+  # end
 
   private
 

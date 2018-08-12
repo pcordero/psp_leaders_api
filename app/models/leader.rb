@@ -121,7 +121,7 @@ class Leader < ActiveRecord::Base
   end
 
   def generate_slug
-    return unless slug.blank?
+    #return unless slug.blank?
     tmp_slug = prefix_name.parameterize
     count = Leader.where("slug = ? or slug LIKE ?", tmp_slug, "#{tmp_slug}--%").count
     if count < 1

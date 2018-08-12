@@ -122,14 +122,50 @@ class Leader < ActiveRecord::Base
 
   def generate_slug
     #return unless slug.blank?
+    self.update_attribute(:slug, nil)
     tmp_slug = prefix_name.parameterize
     count = Leader.where("slug = ? or slug LIKE ?", tmp_slug, "#{tmp_slug}--%").count
+    return if count == 1 && self.slug == tmp_slug
     if count < 1
-      self.slug = tmp_slug
+      #self.slug = tmp_slug
+      new_slug = tmp_slug
     else
-      self.slug = "#{tmp_slug}--#{count + 1}"
+      #self.slug = "#{tmp_slug}--#{count + 1}"
+      new_slug = "#{tmp_slug}--#{count + 1}"
     end
-    self.save
+    self.update_attribute(:slug, new_slug)
+    #self.save
+  end
+  
+  def update_slug
+    self.update_attribute(:slug, self.id)
+    tmp_slug = prefix_name.parameterize
+    count = Leader.where("slug = ? or slug LIKE ?", tmp_slug, "#{tmp_slug}--%").count
+    return if count == 1 && self.slug == tmp_slug
+    if count < 1
+      #self.slug = tmp_slug
+      new_slug = tmp_slug
+    else
+      #self.slug = "#{tmp_slug}--#{count + 1}"
+      new_slug = "#{tmp_slug}--#{count + 1}"
+      count = Leader.where("slug = ? or slug LIKE ?", new_slug, "#{new_slug}--%").count
+      if count >= 1
+        new_slug = "#{tmp_slug}--#{count + 2}"
+      end
+      count = Leader.where("slug = ? or slug LIKE ?", new_slug, "#{new_slug}--%").count
+      if count >= 1
+        new_slug = "#{tmp_slug}--#{count + 3}"
+      end
+      count = Leader.where("slug = ? or slug LIKE ?", new_slug, "#{new_slug}--%").count
+      if count >= 1
+        new_slug = "#{tmp_slug}--#{count + 4}"
+      end
+      count = Leader.where("slug = ? or slug LIKE ?", new_slug, "#{new_slug}--%").count
+      if count >= 1
+        new_slug = "#{tmp_slug}--#{count + 5}"
+      end
+    end
+    self.update_column(:slug, new_slug)
   end
   
   # def update_slug

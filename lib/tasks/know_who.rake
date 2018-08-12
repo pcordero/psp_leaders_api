@@ -191,6 +191,7 @@ AL/ AS/ CA/ CT/ DE/ GA/ HI/ ID/ IN/ KY/ MA/ ME/ MN/ MS/ NC/ NE/ NJ/ NV/ OH/ OR/ 
     # end
     
     leaders.each do |l|
+      puts "Processing leader: #{l.id}"
       l.generate_slug
     end
   end

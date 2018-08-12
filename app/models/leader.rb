@@ -23,7 +23,7 @@ class Leader < ActiveRecord::Base
   scope :us_senate, ->    {where(
                               legislator_type: "FL", chamber: "S").order(:last_name)}
 
-  before_save :generate_slug
+  #before_save :generate_slug
   
   def self.get_last_offset(table, data_scope, state)
     Offset
@@ -146,6 +146,7 @@ class Leader < ActiveRecord::Base
       #self.slug = tmp_slug
       new_slug = tmp_slug
     else
+      
       #self.slug = "#{tmp_slug}--#{count + 1}"
       new_slug = "#{tmp_slug}--#{count + 1}"
       count = Leader.where("slug = ? or slug LIKE ?", new_slug, "#{new_slug}--%").count
@@ -164,6 +165,51 @@ class Leader < ActiveRecord::Base
       if count >= 1
         new_slug = "#{tmp_slug}--#{count + 5}"
       end
+      count = Leader.where("slug = ? or slug LIKE ?", new_slug, "#{new_slug}--%").count
+      if count >= 1
+        new_slug = "#{tmp_slug}--#{count + 6}"
+      end
+      count = Leader.where("slug = ? or slug LIKE ?", new_slug, "#{new_slug}--%").count
+      if count >= 1
+        new_slug = "#{tmp_slug}--#{count + 7}"
+      end
+      count = Leader.where("slug = ? or slug LIKE ?", new_slug, "#{new_slug}--%").count
+      if count >= 1
+        new_slug = "#{tmp_slug}--#{count + 8}"
+      end
+      count = Leader.where("slug = ? or slug LIKE ?", new_slug, "#{new_slug}--%").count
+      if count >= 1
+        new_slug = "#{tmp_slug}--#{count + 9}"
+      end
+      count = Leader.where("slug = ? or slug LIKE ?", new_slug, "#{new_slug}--%").count
+      if count >= 1
+        new_slug = "#{tmp_slug}--#{count + 10}"
+      end
+      count = Leader.where("slug = ? or slug LIKE ?", new_slug, "#{new_slug}--%").count
+      if count >= 1
+        new_slug = "#{tmp_slug}--#{count + 11}"
+      end
+      count = Leader.where("slug = ? or slug LIKE ?", new_slug, "#{new_slug}--%").count
+      if count >= 1
+        new_slug = "#{tmp_slug}--#{count + 12}"
+      end
+      count = Leader.where("slug = ? or slug LIKE ?", new_slug, "#{new_slug}--%").count
+      if count >= 1
+        new_slug = "#{tmp_slug}--#{count + 13}"
+      end
+      count = Leader.where("slug = ? or slug LIKE ?", new_slug, "#{new_slug}--%").count
+      if count >= 1
+        new_slug = "#{tmp_slug}--#{count + 14}"
+      end
+      count = Leader.where("slug = ? or slug LIKE ?", new_slug, "#{new_slug}--%").count
+      if count >= 1
+        new_slug = "#{tmp_slug}--#{count + 15}"
+      end
+      count = Leader.where("slug = ? or slug LIKE ?", new_slug, "#{new_slug}--%").count
+      if count >= 1
+        new_slug = "#{tmp_slug}--#{count + 16}"
+      end
+      
     end
     self.update_column(:slug, new_slug)
   end
